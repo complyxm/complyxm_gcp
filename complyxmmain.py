@@ -27,7 +27,7 @@ db = firestore.Client()
 prices_ref = db.collection(u'prices')
 
 # pricesにデータを格納する
-# prices_ref.add(data)
+prices_ref.add(data)
 
 # 以下、取得した最新データをcsvに読み込む作業を行う
 pricelists = prices_ref.get()
@@ -40,8 +40,8 @@ with open('actualprice.csv', 'w',newline='') as csv_file:
   writer.writeheader()
 
   for pricelist in pricelists:
-    a = pricelist.to_dict()
-    writer.writerow(a)
+    price_dict = pricelist.to_dict()
+    writer.writerow(price_dict)
 
 # -----------------------------------------
 # 書き込み先のjsonファイルを用意する
@@ -63,41 +63,40 @@ import pandas as pd
 import numpy as np
 
 df = pd.read_csv("actualprice.csv")
-print(df)
-# df2 = df2.rename(columns={'date': 'ds', 'rate': 'y'})
-# df2['ds'] = pd.to_datetime(df2['ds']) 
-# df2 = df2.drop(["Unnamed: 0"],axis=1)
-# df2.to_csv("actualprice.csv")
+df = df.rename(columns={'date': 'ds', 'rate': 'y'})
+df['ds'] = pd.to_datetime(df['ds']) 
+df = df.sort_values('ds')
+df.to_csv("actualprice.csv")
 
 # import matplotlib.pyplot as plt
-# from fbprophet import Prophet
+from fbprophet import Prophet
 
 # CSVファイル読み込み
-# df = pd.read_csv('actualprice.csv')
+df = pd.read_csv('actualprice.csv')
 # テスト用はprocessed_data.csv
 # 本番用はactualprice.csv
 
 # 機械学習ライブラリへの読み込み
-# model = Prophet(yearly_seasonality = True, weekly_seasonality = True, daily_seasonality = True)
+model = Prophet(yearly_seasonality = True, weekly_seasonality = True, daily_seasonality = True)
 
 # 予測モデルへの入力
-# model.fit(df)
-# future = model.make_future_dataframe(periods=30)
-# forecast = model.predict(future)
+model.fit(df)
+future = model.make_future_dataframe(periods=30)
+forecast = model.predict(future)
 
 # 30日後の予測値と今日の価格を出力
-# f = forecast['yhat'].tail(1).values[0]
-# today = df['y'].tail(1).values[0]
+f = forecast['yhat'].tail(1).values[0]
+today = df['y'].tail(1).values[0]
 
-# if f >= today:
-#    print("本日の価格は %d で、１ヶ月後の価格は %d となり価格上昇傾向です" % (today,f))
-# else:
-#    print("本日の価格は %d で、１ヶ月後の価格は %d となり価格下落傾向です" % (today,f))
+if f >= today:
+     print("本日の価格は %d で、１ヶ月後の価格は %d となり価格上昇傾向です" % (today,f))
+else:
+     print("本日の価格は %d で、１ヶ月後の価格は %d となり価格下落傾向です" % (today,f))
 
 # graph
-# from fbprophet.plot import add_changepoints_to_plot
-# fig = model.plot(forecast)
-# a = add_changepoints_to_plot(fig.gca(), model, forecast)
-# fig.savefig('a.png');
-# model.plot_components(forecast).savefig('b.png');
-# plt.show()
+#from fbprophet.plot import add_changepoints_to_plot
+#fig = model.plot(forecast)
+#a = add_changepoints_to_plot(fig.gca(), model, forecast)
+#fig.savefig('a.png');
+#model.plot_components(forecast).savefig('b.png');
+#plt.show()
