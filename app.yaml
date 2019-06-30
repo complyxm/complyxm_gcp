@@ -1,0 +1,9 @@
+runtime: python37
+api_version: 1
+
+service: complyxm
+threadsafe: false
+
+handlers:
+- url: /.*
+  script: complyxmmain.app
