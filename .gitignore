@@ -2,3 +2,6 @@
 ./actualprice.json
 ./actualprice.csv
 ./json.txt
+
+./__pycache__
+./.gcloudignore

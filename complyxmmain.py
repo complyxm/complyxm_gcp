@@ -89,9 +89,12 @@ f = forecast['yhat'].tail(1).values[0]
 today = df['y'].tail(1).values[0]
 
 if f >= today:
-     print("本日の価格は %d で、１ヶ月後の価格は %d となり価格上昇傾向です" % (today,f))
+  result = "本日の価格は %d で、１ヶ月後の価格は %d となり価格上昇傾向です" % (today,f)
 else:
-     print("本日の価格は %d で、１ヶ月後の価格は %d となり価格下落傾向です" % (today,f))
+  result = "本日の価格は %d で、１ヶ月後の価格は %d となり価格下落傾向です" % (today,f)
+
+def printResult():
+  return result
 
 # graph
 #from fbprophet.plot import add_changepoints_to_plot

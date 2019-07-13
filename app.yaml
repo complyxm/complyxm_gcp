@@ -1,9 +1,15 @@
 runtime: python37
-api_version: 1
+# api_version: 1
 
-service: complyxm
-threadsafe: false
+service: default
+threadsafe: true
 
 handlers:
-- url: /.*
-  script: complyxmmain.app
+- url: /
+  script: auto
+
+- url: /index\.html
+  script: auto
+
+- url: /static
+  static_dir: static
