@@ -2,7 +2,7 @@ runtime: python37
 # api_version: 1
 
 service: default
-threadsafe: true
+# threadsafe: true
 
 handlers:
 - url: /

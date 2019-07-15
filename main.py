@@ -10,5 +10,6 @@ def hello():
      # print(data)
      return render_template('hello.html',data=data)
 
+
 if __name__ == '__main__':
     app.run()
