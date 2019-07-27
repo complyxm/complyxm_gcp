@@ -1,3 +1,4 @@
+# coding: UTF-8
 from flask import Flask, render_template
 import complyxmmain
 

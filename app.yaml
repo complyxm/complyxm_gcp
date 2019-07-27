@@ -1,15 +1,15 @@
-runtime: python37
-# api_version: 1
+runtime: python27
+api_version: 1
 
 service: default
-# threadsafe: true
+threadsafe: true
 
 handlers:
 - url: /
-  script: auto
+  script: main.app
 
 - url: /index\.html
-  script: auto
+  script: main.app
 
 - url: /static
   static_dir: static

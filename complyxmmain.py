@@ -1,3 +1,4 @@
+# coding: UTF-8
 import requests
 import json
 from datetime import datetime
@@ -27,23 +28,24 @@ db = firestore.Client()
 prices_ref = db.collection(u'prices')
 
 # pricesにデータを格納する
-prices_ref.add(data)
+# prices_ref.add(data)
 
 # 以下、取得した最新データをJSONに書き出す作業を行う
 pricelists = prices_ref.get()
 pricelists = [i.to_dict() for i in pricelists]
+enc = json.dumps(pricelists)
 
 # 書き込み先のjsonファイルを用意する
-f = open('loaded_price.json','w')
+# f = open('loaded_price.json','w')
 # DBの要素をjsonにdumpしていく。
-json.dump(pricelists, f, ensure_ascii=True, indent=4, sort_keys=True, separators=(',', ': '))
-f.close()
+# json.dump(pricelists, f, ensure_ascii=True, indent=4, sort_keys=True, separators=(',', ': '))
+# f.close()
 
 import pandas as pd
 import numpy as np
 
 # jsonデータをpandasに渡す
-df = pd.read_json("loaded_price.json")
+df = pd.read_json(enc)
 
 # jsonデータのcolumnをprophetの指定名称に書き換え、時系列でソートする
 df = df.rename(columns={'date': 'ds', 'rate': 'y'})
@@ -68,9 +70,9 @@ f = forecast['yhat'].tail(1).values[0]
 today = df['y'].tail(1).values[0]
 
 if f >= today:
-  result = "本日の価格は %d で、１ヶ月後の価格は %d となり価格上昇傾向です" % (today,f)
+   result = "本日の価格は %d で、１ヶ月後の価格は %d となり価格上昇傾向です" % (today,f)
 else:
-  result = "本日の価格は %d で、１ヶ月後の価格は %d となり価格下落傾向です" % (today,f)
+   result = "本日の価格は %d で、１ヶ月後の価格は %d となり価格下落傾向です" % (today,f)
 
 def printResult():
    return result
