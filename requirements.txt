@@ -1,15 +1,27 @@
+# Google
+google-cloud-firestore==0.32.1
+
+# google-cloud-core
+google-cloud-core==0.29.0
+
+# google-api-python-client
+
+# requests
+requests
+requests-toolbelt 
+
+# Flask
 Flask==1.0.2
 Werkzeug>=0.14
 gunicorn==19.9.0
-requests
-google-cloud-firestore
 
-Cython>=0.22
-pystan>=2.19
-numpy>=1.10.0
-pandas>=0.23.4
-matplotlib>=2.0.0
-lunardate>=0.1.5
-convertdate>=2.1.2
-holidays>=0.9.5
-fbprophet==0.1.post1
+# fbprophet
+# Cython>=0.22
+# pystan>=2.19
+# pandas>=0.23.4
+# fbprophet
+# lunardate>=0.1.5
+# convertdate>=2.1.2
+# holidays>=0.9.5
+# numpy>=1.10.0
+# matplotlib>=2.0.0

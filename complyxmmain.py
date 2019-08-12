@@ -1,5 +1,8 @@
 # coding: UTF-8
 import requests
+import requests_toolbelt.adapters.appengine
+requests_toolbelt.adapters.appengine.monkeypatch()
+
 import json
 from datetime import datetime
 
@@ -42,7 +45,7 @@ enc = json.dumps(pricelists)
 # f.close()
 
 import pandas as pd
-import numpy as np
+# import numpy as np
 
 # jsonデータをpandasに渡す
 df = pd.read_json(enc)
@@ -51,7 +54,6 @@ df = pd.read_json(enc)
 df = df.rename(columns={'date': 'ds', 'rate': 'y'})
 df['ds'] = pd.to_datetime(df['ds']) 
 df = df.sort_values('ds')
-print(df)
 
 # prophetライブラリを読み込む
 # import matplotlib.pyplot as plt
